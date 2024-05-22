@@ -2,7 +2,7 @@
 
 **Have fun pasters.**
 
-Basic Guarded regions bypass for DMA.
+Guarded regions bypass for DMA.
 
 # Usage:
 Use this to get past Guarded Regions on DMA, This is 100% needed to create a DMA cheat on Valorant.
