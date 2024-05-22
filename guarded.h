@@ -35,32 +35,6 @@
 		return validatePointer(buffer);
 	}
 
-	bool Read3(ULONG64 address, void* buffer, SIZE_T size)
-	{
-		//assertNoInit();
-		DWORD dwBytesRead = 0;
-
-#if COUNT_TOTAL_READSIZE
-		readSize += size;
-#endif
-
-		//VMMDLL_MemReadEx(DMA_HANDLE, processInfo.pid, address, reinterpret_cast<PBYTE>(buffer), size, &dwBytesRead, VMMDLL_FLAG_NOCACHE | VMMDLL_FLAG_NOPAGING | VMMDLL_FLAG_ZEROPAD_ON_FAIL | VMMDLL_FLAG_NOPAGING_IO);
-
-		int pid = 4;
-
-		if (!((address & 0xFFF0000000000000) == 0xFFF0000000000000))
-			pid = processInfo.pid;
-
-		//std::cout << "read from pid: " << std::to_string(pid).c_str() << std::endl;
-
-		auto flags = VMMDLL_FLAG_NOCACHE | VMMDLL_FLAG_NOPAGING | VMMDLL_FLAG_NOCACHEPUT | VMMDLL_FLAG_NOPAGING_IO;
-
-		VMMDLL_MemReadEx(DMA_HANDLE, pid, (ULONG64)address, reinterpret_cast<PBYTE>(buffer), size, NULL, flags);
-
-		if (pid == 4) return true;
-		else return false;
-	}
-
 	ULONG64 GetGuardedRegion()
 	{
 		PVMMDLL_MAP_POOL pPool;
@@ -71,8 +45,6 @@
 			PVMMDLL_MAP_POOLENTRY pEntry = &pPool->pMap[i];
 
 			if (pEntry->cb == 0x200000 && memcmp(pEntry->szTag, "ConT", 4) == 0) {
-
-				//std::cout << "tag: " << pEntry->szTag << " type: " << std::dec << pEntry->tpPool << std::endl;
 
 				ULONG64 result = pEntry->va;
 
@@ -86,9 +58,7 @@
 		VMMDLL_MemFree(pPool);
 		return NULL;
 
-		//uintptr_t vgk = VMMDLL_ProcessGetModuleBaseU(DMA_HANDLE, 4, const_cast<LPSTR>("vgk.sys"));
 
-		//std::cout << "vgk.sys: 0x" << std::hex << vgk << std::endl;
 
 		//guard_address = Read2(vgk + 0x7FCE0);
 
