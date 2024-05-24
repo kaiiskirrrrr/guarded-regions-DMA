@@ -1,6 +1,6 @@
 # Guarded-Regions-DMA
 
-**Have fun pasters.**
+**Have fun my pasters.**
 
 Guarded regions bypass for DMA.
 
