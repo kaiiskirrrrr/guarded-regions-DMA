@@ -10,7 +10,8 @@ Hope this helps those who are getting started with Valorant & DMA, This is not a
 ## How To Use:
 
 - Pretty self explanatory
-- Pair with another DMA Library
+- Pair with another DMA Library[Uploading loop.h…]()
+- Check if kernel, if it is use a scatter handle with 4. if not use one with 0.
 
 
 
