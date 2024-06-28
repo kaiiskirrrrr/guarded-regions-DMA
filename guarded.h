@@ -15,7 +15,7 @@
 		return (ptr & 0xFFF0000000000000) == 0xFFF0000000000000;
 	}
 
-	inline uintptr_t Read2(uintptr_t address, bool cache = false) {
+	inline uintptr_t read_two(uintptr_t address, bool cache = false) {
 		uintptr_t buffer{};
 		int pid = 4;
 
@@ -33,7 +33,16 @@
 		return validate_pointer(buffer);
 	}
 
-	ULONG64 get_guarded_region()
+        inline VMMDLL_SCATTER_HANDLE create_scatter_handle(int pid) const
+        {
+
+	if (pid == 0) pid = processInfo.pid;
+
+	const VMMDLL_SCATTER_HANDLE scatter_handle = VMMDLL_Scatter_Initialize(handle, pid, misa_flags);
+	return scatter_handle;
+        }
+
+	auto get_guarded_region() -> ULONG64
 	{
 		PVMMDLL_MAP_POOL pPool;
 
